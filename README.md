@@ -10,8 +10,8 @@
  3.php  redis 扩展
  4.js  websocket 客户端
  5.android  zxing 类库扫描二维码
- 6. android okhttp 网络类库
- 7. mysql 储存数据
+ 6.android okhttp 网络类库
+ 7.mysql 储存数据
  注意：最终实现为 DEMO 版本，切勿拿到生产环境上使用。
  
  
@@ -22,17 +22,17 @@
 > 文件列表介绍
 > 
 
- 1. QRScanner.apk android扫描二维码客户端(小米2S上测试了，哈哈其他不知道兼容不，毕竟不是写android的)
- 2. api.php android 请求接口处理，并且转发 UDP 到 api_server.php
- 3. api_server.php  服务端处理
- 4. qrlogin.sql 数据库配置文件
+ 1.QRScanner.apk android扫描二维码客户端(小米2S上测试了，哈哈其他不知道兼容不，毕竟不是写android的)
+ 2.api.php android 请求接口处理，并且转发 UDP 到 api_server.php
+ 3.api_server.php  服务端处理
+ 4.qrlogin.sql 数据库配置文件
  
  
 
 > 基础配置
 	> 
 
- 1. 数据库连接配置
+ 1.数据库连接配置
 	 ./db/Pdomysql.clss
 	
 		```
@@ -49,15 +49,15 @@
 		);
 		数据库根据自己的环境配置，这垃圾代码，大家将就吧
 	```
-  2. 文件权限
+  2.文件权限
      ./temp 读写权限（linux）
 
- 3. 修改index.php 的token 地址配置
+  3.修改index.php 的token 地址配置
+  
 		```
 		 $tokenURL = 'http://your_ip/qrlogin/api.php?token='.$uuid;
 		```
-
-4. 配置 api_server.php swoole_websocket_server、Redis、UDP监听地址和端口
+  4.配置 api_server.php swoole_websocket_server、Redis、UDP监听地址和端口
 		
 		``` 
 		$serv = new swoole_websocket_server("0.0.0.0", 9502);
@@ -73,11 +73,11 @@
 > 基本实现原理（没有啥技术含量）
 	> 
 
- 1. 浏览网页(index.php)，生成 Token(UUID也可以这么说)，保存到 MySql 数据库或者缓存也可以，有Redis
+ 1.浏览网页(index.php)，生成 Token(UUID也可以这么说)，保存到 MySql 数据库或者缓存也可以，有Redis
  嘛，websocket 连接到 swoole，等待推送信息
- 2. 客户端扫描二维码里面的Token,Android 客户端(用户登录状态)携带用户名和Token或者其他标识
+ 2.客户端扫描二维码里面的Token,Android 客户端(用户登录状态)携带用户名和Token或者其他标识
  请求api.php做校验更新数据库,api.php 发送 UDP 请求到 api_server.php
- 3. api_server.php 接受到 UDP 请求处理后将登录信息推送到网页客户端
+ 3.api_server.php 接受到 UDP 请求处理后将登录信息推送到网页客户端
  
 
 > 写到最后
